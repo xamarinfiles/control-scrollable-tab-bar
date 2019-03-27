@@ -1,1 +1,1 @@
-# control-tabbed-carousel
+# Tabbed Carousel for Xamarin.Forms
