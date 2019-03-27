@@ -1,1 +1,1 @@
-# control-scrollable-tab-bar
+# control-tabbed-carousel
