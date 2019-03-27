@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xaml-comp compile="true" ?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+  xmlns:sys="clr-namespace:System;assembly=netstandard"
+  x:Class="TabbedCarousel.TabbedCarousel"
+  x:Name="This">
+  <ContentView.Content>
+    <!-- DEL BackgroundColor -->
+    <Grid BackgroundColor="Yellow"
+      RowSpacing="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <!-- DEL BackgroundColor -->
+      <ScrollView Grid.Row="0"
+        x:Name="TabBar"
+        Orientation="Horizontal"
+        BackgroundColor="LightBlue"
+        HorizontalScrollBarVisibility="Never"
+        VerticalScrollBarVisibility="Never">
+        <StackLayout x:Name="TabButtons"
+          Orientation="Horizontal"
+          Spacing="2" />
+      </ScrollView>
+
+      <!-- DEL BackgroundColor -->
+      <carousel:CarouselViewControl Grid.Row="1"
+        x:Name="Carousel"
+        BackgroundColor="LightPink"
+        ItemsSource="{Binding TabViews, Source={x:Reference This}}"
+        Orientation="Horizontal"
+        ShowArrows="False"
+        ShowIndicators="False"
+        AnimateTransition="False"
+        PositionSelected="CarouselPositionSelected">
+        <!--x:Name="TabViews"-->
+        <!--ItemTemplate="{Binding TabView, Source={x:Reference This}}"-->
+        <!--<carousel:CarouselViewControl
+        BackgroundColor="LightPink"
+        ItemsSource="{Binding TabViews, Source={x:Reference This}}"
+        Orientation="Horizontal"
+        ShowArrows="True"
+        ShowIndicators="True">-->
+        <!--<carousel:CarouselViewControl.ItemTemplate>
+          <DataTemplate>
+            <Label Text="{Binding .}" BackgroundColor="Yellow" TextColor="Black"></Label>
+          </DataTemplate>
+        </carousel:CarouselViewControl.ItemTemplate>
+        <carousel:CarouselViewControl.ItemsSource>
+          <x:Array Type="{x:Type sys:String}">
+            <x:String>Hello</x:String>
+            <x:String>World</x:String>
+          </x:Array>-->
+        <!--<x:Array Type="{Type string}">
+            <Label Text="Yellow"
+              BackgroundColor="Yellow" />
+            <Label Text="Blue"
+              BackgroundColor="Blue" />
+            <Label Text="Green"
+              BackgroundColor="Green" />
+          </x:Array>-->
+        <!--</carousel:CarouselViewControl.ItemsSource>-->
+      </carousel:CarouselViewControl>
+
+      <!---->
+      <!-- DEL BackgroundColor -->
+      <!--<carousel:CarouselViewControl x:Name="TabViews"
+        BackgroundColor="LightPink"
+        ShowArrows="False"
+        ShowIndicators="False">
+        <carousel:CarouselViewControl.ItemTemplate>
+          <DataTemplate>
+            <Label Text="{Binding .}" BackgroundColor="Yellow" TextColor="Black"></Label>
+          </DataTemplate>
+        </carousel:CarouselViewControl.ItemTemplate>
+        <carousel:CarouselViewControl.ItemsSource>
+          <x:Array Type="{x:Type sys:String}">
+            <x:String>Hello</x:String>
+            <x:String>World</x:String>
+          </x:Array>-->
+      <!--<x:Array Type="{Type string}">
+            <Label Text="Yellow"
+              BackgroundColor="Yellow" />
+            <Label Text="Blue"
+              BackgroundColor="Blue" />
+            <Label Text="Green"
+              BackgroundColor="Green" />
+          </x:Array>-->
+      <!--</carousel:CarouselViewControl.ItemsSource>
+      </carousel:CarouselViewControl>-->
+    </Grid>
+  </ContentView.Content>
+</ContentView>

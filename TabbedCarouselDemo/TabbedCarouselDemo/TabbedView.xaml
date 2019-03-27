@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xaml-comp compile="true" ?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="TabbedCarouselDemo.Controls.TabbedView"
+  x:Name="This">
+  <ContentView.Content>
+    <StackLayout>
+      <Label Text="{Binding Text, Source={x:Reference This}}"
+        TextColor="{Binding TextColor, Source={x:Reference This}}" />
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>
