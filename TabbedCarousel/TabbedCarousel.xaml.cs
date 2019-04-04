@@ -41,25 +41,6 @@ namespace TabbedCarousel
 
         #region Bindable Properties
 
-        //#region AutoScroll
-
-        //public bool AutoScroll
-        //{
-        //    get => (bool) GetValue(AutoScrollProperty);
-        //    set => SetValue(AutoScrollProperty, value);
-        //}
-
-        //[SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
-        //[SuppressMessage("ReSharper", "RedundantArgumentName")]
-        //public static readonly BindableProperty AutoScrollProperty =
-        //    BindableProperty.Create(
-        //        propertyName: nameof(AutoScroll),
-        //        returnType: typeof(bool),
-        //        declaringType: typeof(TabbedCarousel),
-        //        defaultValue: true);
-
-        //#endregion
-
         #region SelectedTabIndex
 
         public int SelectedTabIndex
@@ -99,24 +80,6 @@ namespace TabbedCarousel
                 propertyChanged: TabNamesChanged);
 
         #endregion
-
-        //#region TabView
-
-        //public DataTemplate TabView
-        //{
-        //    get => (DataTemplate)GetValue(TabViewProperty);
-        //    set => SetValue(TabViewProperty, value);
-        //}
-
-        //[SuppressMessage("ReSharper", "RedundantArgumentName")]
-        //public static readonly BindableProperty TabViewProperty =
-        //    BindableProperty.Create(
-        //        propertyName: nameof(TabView),
-        //        returnType: typeof(DataTemplate),
-        //        declaringType: typeof(TabbedCarousel),
-        //        defaultValue: default(DataTemplate));
-
-        //#endregion
 
         #region TabViews
 

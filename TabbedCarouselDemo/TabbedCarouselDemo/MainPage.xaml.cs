@@ -11,16 +11,12 @@ namespace TabbedCarouselDemo
             InitializeComponent();
 
             TabbedCarousel.TabNames =
-            // new string[] {"abc", "def", "ghi", "jkl", "mno", "pqr", "stu","vwx", "yz"};
                 new List<string>
                 {
                     "Motorcycle", "Car", "Plane", "Boat", "Bike", "Jeep", "Train", "Truck"
                 };
 
-            //TabbedCarousel.TabView = new DataTemplate(typeof(TabbedView));
-
             TabbedCarousel.TabViews =
-                // new string[] {"abc", "def", "ghi", "jkl", "mno", "pqr", "stu","vwx", "yz"};
                 new ObservableCollection<View>
                 {
                     new Label
@@ -95,8 +91,6 @@ namespace TabbedCarouselDemo
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     }
-
-                    //"Motorcycle", "Car", "Plane", "Boat", "Bike", "Jeep", "Train", "Truck"
                 };
         }
     }

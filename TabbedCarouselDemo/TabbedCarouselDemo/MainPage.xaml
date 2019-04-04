@@ -5,14 +5,5 @@
   xmlns:control="clr-namespace:TabbedCarousel;assembly=TabbedCarousel"
   xmlns:local="clr-namespace:TabbedCarouselDemo"
   x:Class="TabbedCarouselDemo.MainPage">
-
-  <!-- DEL BackgroundColor -->
-  <!--<StackLayout BackgroundColor="LightSkyBlue">-->
-    <!-- Place new controls here -->
-    <!--<Label Text="Welcome to Xamarin.Forms!"
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />-->
-    <control:TabbedCarousel x:Name="TabbedCarousel" />
-  <!--</StackLayout>-->
-
+  <control:TabbedCarousel x:Name="TabbedCarousel" />
 </ContentPage>
