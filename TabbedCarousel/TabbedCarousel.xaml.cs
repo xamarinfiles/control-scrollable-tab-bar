@@ -146,25 +146,6 @@ namespace TabbedCarousel
 
         #endregion
 
-        //#region TabViews
-
-        //public ObservableCollection<View> TabViews
-        //{
-        //    get => (ObservableCollection<View>) GetValue(TabViewsProperty);
-        //    set => SetValue(TabViewsProperty, value);
-        //}
-
-        //[SuppressMessage("ReSharper", "RedundantArgumentName")]
-        //private static readonly BindableProperty TabViewsProperty =
-        //    BindableProperty.Create(
-        //        propertyName: nameof(TabViews),
-        //        returnType: typeof(ObservableCollection<View>),
-        //        declaringType: typeof(TabbedCarousel),
-        //        defaultValue: default(ObservableCollection<View>));
-        //        //propertyChanged: TabViewsChanged);
-
-        //#endregion
-
         #endregion
 
         #region Properties
@@ -350,23 +331,6 @@ namespace TabbedCarousel
             // TODO Default to first or set based on stored value?
             tabbedCarousel.TabViewIndex = 0;
         }
-
-        //private static void TabViewsChanged(BindableObject bindable, object oldValue,
-        //    object newValue)
-        //{
-        //    if (!(bindable is TabbedCarousel tabbedCarousel) ||
-        //        tabbedCarousel.TabViews == null ||
-        //        tabbedCarousel.TabViews.Count <= 0)
-        //        return;
-
-        //    tabbedCarousel.Tabs.Children.Clear();
-
-        //    foreach (var tabView in tabbedCarousel.TabViews)
-        //    {
-        //        tabView.WidthRequest = PageWidth;
-        //        tabbedCarousel.Tabs.Children.Add(tabView);
-        //    }
-        //}
 
         #endregion
     }

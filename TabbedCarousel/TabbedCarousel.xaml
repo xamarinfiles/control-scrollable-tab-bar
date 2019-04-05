@@ -29,10 +29,6 @@
         IsClippedToBounds="False"
         HorizontalScrollBarVisibility="Never"
         VerticalScrollBarVisibility="Never">
-        <!--<StackLayout x:Name="Tabs"
-          Orientation="Horizontal"
-          IsClippedToBounds="False"
-          Spacing="0" />-->
         <StackLayout x:Name="Tabs"
           BindableLayout.ItemsSource="{Binding TabData, Source={x:Reference This}}"
           Orientation="Horizontal"
