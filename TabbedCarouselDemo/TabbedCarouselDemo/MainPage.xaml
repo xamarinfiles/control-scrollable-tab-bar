@@ -4,5 +4,18 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:control="clr-namespace:TabbedCarousel;assembly=TabbedCarousel"
   x:Class="TabbedCarouselDemo.MainPage">
-  <control:TabbedCarousel x:Name="TabbedCarousel" />
+  <control:TabbedCarousel x:Name="TabbedCarousel">
+    <control:TabbedCarousel.TabTemplate>
+      <DataTemplate>
+        <Label Text="{Binding Name}"
+          HorizontalOptions="FillAndExpand"
+          WidthRequest="{x:Static control:TabbedCarousel.PageWidth}"
+          TextColor="Black"
+          FontAttributes="Bold"
+          BackgroundColor="{Binding Color}"
+          HorizontalTextAlignment="Center"
+          VerticalTextAlignment="Center" />
+      </DataTemplate>
+    </control:TabbedCarousel.TabTemplate>
+  </control:TabbedCarousel>
 </ContentPage>

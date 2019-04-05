@@ -7,45 +7,12 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace TabbedCarousel
 {
     [SuppressMessage("ReSharper", "RedundantExtendsListEntry")]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabbedCarousel : ContentView
     {
-        #region Constructors
-
-        public TabbedCarousel()
-        {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception exception)
-            {
-                SaveExceptionLocation(exception);
-
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Exceptions
-
-        private void SaveExceptionLocation(Exception exception,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            exception.Data.Add("Member Name", memberName);
-            exception.Data.Add("Source File Path", sourceFilePath);
-            exception.Data.Add("Source Line Number", sourceLineNumber);
-        }
-
-        #endregion
-
         #region Enums
 
         private enum XDirection
@@ -62,6 +29,24 @@ namespace TabbedCarousel
         public static double PageWidth => Device.Info.ScaledScreenSize.Width;
 
         private XDirection SwipeDirection { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public TabbedCarousel()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception exception)
+            {
+                SaveExceptionLocation(exception);
+
+                throw;
+            }
+        }
 
         #endregion
 
@@ -146,6 +131,24 @@ namespace TabbedCarousel
 
         #endregion
 
+        #region TabTemplate
+
+        public DataTemplate TabTemplate
+        {
+            get => (DataTemplate) GetValue(TabTemplateProperty);
+            set => SetValue(TabTemplateProperty, value);
+        }
+
+        [SuppressMessage("ReSharper", "RedundantArgumentName")]
+        private static readonly BindableProperty TabTemplateProperty =
+            BindableProperty.Create(
+                propertyName: nameof(TabTemplate),
+                returnType: typeof(DataTemplate),
+                declaringType: typeof(TabbedCarousel),
+                defaultValue: default(DataTemplate));
+
+        #endregion
+
         #endregion
 
         #region Properties
@@ -153,14 +156,6 @@ namespace TabbedCarousel
         #endregion
 
         #region Events
-
-        #endregion
-
-        #region Delegates
-
-        #endregion
-
-        #region Private
 
         private void PanGestureRecognizer_OnPanUpdated(object sender,
             PanUpdatedEventArgs e)
@@ -240,8 +235,8 @@ namespace TabbedCarousel
                 if (tabIndex < 0)
                     return;
 
-                var tabButton = (StackLayout) tabButtons.Children[tabIndex];
-                var boxView = (BoxView) tabButton.LogicalChildren[1];
+                var tabButton = (StackLayout)tabButtons.Children[tabIndex];
+                var boxView = (BoxView)tabButton.LogicalChildren[1];
 
                 boxView.BackgroundColor = underlineColor;
             }
@@ -305,7 +300,7 @@ namespace TabbedCarousel
                 tapGesture.Tapped += (sender, eventArgs) =>
                 {
                     // TODO
-                    if (int.TryParse(((StackLayout) sender).ClassId, out var tabIndex))
+                    if (int.TryParse(((StackLayout)sender).ClassId, out var tabIndex))
                         tabbedCarousel.TabButtonIndex = tabIndex;
                 };
 
@@ -330,6 +325,28 @@ namespace TabbedCarousel
 
             // TODO Default to first or set based on stored value?
             tabbedCarousel.TabViewIndex = 0;
+        }
+
+        #endregion
+
+        #region Delegates
+
+        #endregion
+
+        #region Private
+
+        #endregion
+
+        #region Exceptions
+
+        private void SaveExceptionLocation(Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            exception.Data.Add("Member Name", memberName);
+            exception.Data.Add("Source File Path", sourceFilePath);
+            exception.Data.Add("Source Line Number", sourceLineNumber);
         }
 
         #endregion
