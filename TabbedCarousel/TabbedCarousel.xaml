@@ -4,7 +4,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-  xmlns:sys="clr-namespace:System;assembly=netstandard"
+  xmlns:local="clr-namespace:TabbedCarousel"
   x:Class="TabbedCarousel.TabbedCarousel"
   x:Name="This">
   <ContentView.Content>
@@ -15,7 +15,7 @@
       </Grid.RowDefinitions>
 
       <ScrollView Grid.Row="0"
-        x:Name="TabBar"
+        x:Name="TabButtonsBar"
         Orientation="Horizontal"
         HorizontalScrollBarVisibility="Never"
         VerticalScrollBarVisibility="Never">
@@ -24,15 +24,25 @@
           Spacing="2" />
       </ScrollView>
 
-      <carousel:CarouselViewControl Grid.Row="1"
-        x:Name="Carousel"
-        ItemsSource="{Binding TabViews, Source={x:Reference This}}"
+      <ScrollView Grid.Row="1"
+        x:Name="TabViewsCarousel"
         Orientation="Horizontal"
-        ShowArrows="False"
-        ShowIndicators="False"
-        AnimateTransition="False"
-        PositionSelected="CarouselPositionSelected">
-     </carousel:CarouselViewControl>
+        IsClippedToBounds="False"
+        HorizontalScrollBarVisibility="Never"
+        VerticalScrollBarVisibility="Never">
+        <StackLayout x:Name="Tabs"
+          Orientation="Horizontal"
+          IsClippedToBounds="False"
+          Spacing="0" />
+      </ScrollView>
+
+      <BoxView Grid.Row="1"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <BoxView.GestureRecognizers>
+          <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+        </BoxView.GestureRecognizers>
+      </BoxView>
     </Grid>
   </ContentView.Content>
 </ContentView>

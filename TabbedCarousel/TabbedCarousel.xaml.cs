@@ -4,16 +4,32 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using CarouselView.FormsPlugin.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ScrolledEventArgs = Xamarin.Forms.ScrolledEventArgs;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace TabbedCarousel
 {
     public partial class TabbedCarousel : ContentView
     {
         #region Enums
+
+        private enum XDirection
+        {
+            Unknown,
+            Left,
+            Right
+        }
+
+        #endregion
+
+        #region Fields
+
+        private static double PageWidth => Device.Info.ScaledScreenSize.Width;
+
+        private XDirection SwipeDirection { get; set; }
 
         #endregion
 
@@ -41,24 +57,41 @@ namespace TabbedCarousel
 
         #region Bindable Properties
 
-        #region SelectedTabIndex
+        #region TabButtonIndex
 
-        public int SelectedTabIndex
+        public int TabButtonIndex
         {
-            get => (int) GetValue(SelectedTabIndexProperty);
-            set => SetValue(SelectedTabIndexProperty, value);
+            get => (int) GetValue(TabButtonIndexProperty);
+            set => SetValue(TabButtonIndexProperty, value);
         }
 
-        [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
         [SuppressMessage("ReSharper", "RedundantArgumentName")]
-        private static readonly BindableProperty SelectedTabIndexProperty =
+        private static readonly BindableProperty TabButtonIndexProperty =
             BindableProperty.Create(
-                propertyName: nameof(SelectedTabIndex),
+                propertyName: nameof(TabButtonIndex),
                 returnType: typeof(int),
                 declaringType: typeof(TabbedCarousel),
-                // Start with an invalid index position to keep same selection routine
-                defaultValue: -1,
-                propertyChanged: SelectedTabIndexChanged);
+                defaultValue: default(int),
+                propertyChanged: TabButtonIndexChanged);
+
+        #endregion
+
+        #region TabViewIndex
+
+        public int TabViewIndex
+        {
+            get => (int) GetValue(TabViewIndexProperty);
+            set => SetValue(TabViewIndexProperty, value);
+        }
+
+        [SuppressMessage("ReSharper", "RedundantArgumentName")]
+        private static readonly BindableProperty TabViewIndexProperty =
+            BindableProperty.Create(
+                propertyName: nameof(TabViewIndex),
+                returnType: typeof(int),
+                declaringType: typeof(TabbedCarousel),
+                defaultValue: default(int),
+                propertyChanged: TabViewIndexChanged);
 
         #endregion
 
@@ -66,7 +99,7 @@ namespace TabbedCarousel
 
         public IList<string> TabNames
         {
-            get => (IList<string>)GetValue(TabNamesProperty);
+            get => (IList<string>) GetValue(TabNamesProperty);
             set => SetValue(TabNamesProperty, value);
         }
 
@@ -85,7 +118,7 @@ namespace TabbedCarousel
 
         public ObservableCollection<View> TabViews
         {
-            get => (ObservableCollection<View>)GetValue(TabViewsProperty);
+            get => (ObservableCollection<View>) GetValue(TabViewsProperty);
             set => SetValue(TabViewsProperty, value);
         }
 
@@ -116,16 +149,62 @@ namespace TabbedCarousel
 
         #region Private
 
-        private void CarouselPositionSelected(object sender, PositionSelectedEventArgs e)
+        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            var carouselPosition = e.NewValue;
-            var tabButton = TabButtons.Children[carouselPosition];
+            switch (e.StatusType)
+            {
+                case GestureStatus.Started:
+                case GestureStatus.Running:
+                    XDirection newDirection = XDirection.Unknown;
 
-            SelectedTabIndex = carouselPosition;
-            TabBar.ScrollToAsync(tabButton, ScrollToPosition.Start, animated: false);
+                    if (e.TotalX < 0)
+                        newDirection = XDirection.Right;
+
+                    if (e.TotalX > 0)
+                        newDirection = XDirection.Left;
+
+                    if (SwipeDirection == newDirection)
+                    {
+                        Debug.WriteLine($"*** {e.TotalX}");
+
+                        return;
+                    }
+
+                    SwipeDirection = newDirection;
+
+                    Debug.WriteLine($"*** {e.TotalX} => {SwipeDirection}");
+
+                    break;
+
+                case GestureStatus.Completed:
+                    if (SwipeDirection == XDirection.Left && TabViewIndex > 0)
+                    {
+                        var tab = Tabs.Children[TabViewIndex -= 1];
+                        TabViewsCarousel.ScrollToAsync(tab, ScrollToPosition.MakeVisible,
+                            true);
+
+                        var tabName = TabButtons.Children[TabButtonIndex -= 1];
+                        TabButtonsBar.ScrollToAsync(tabName, ScrollToPosition.MakeVisible,
+                            true);
+                    }
+
+                    if (SwipeDirection == XDirection.Right &&
+                        TabViewIndex < Tabs.Children.Count - 1)
+                    {
+                        var tab = Tabs.Children[TabViewIndex += 1];
+                        TabViewsCarousel.ScrollToAsync(tab, ScrollToPosition.MakeVisible,
+                            true);
+
+                        var tabName = TabButtons.Children[TabButtonIndex += 1];
+                        TabButtonsBar.ScrollToAsync(tabName, ScrollToPosition.MakeVisible,
+                            true);
+                    }
+
+                    break;
+            }
         }
 
-        private static void SelectedTabIndexChanged(BindableObject bindable,
+        private static void TabButtonIndexChanged(BindableObject bindable,
             object oldvalue, object newvalue)
         {
             if (!(bindable is TabbedCarousel tabbedCarousel) ||
@@ -140,7 +219,7 @@ namespace TabbedCarousel
             SetTabUnderlineColor(oldTabIndex, Color.Transparent);
             SetTabUnderlineColor(newTabIndex, Color.Blue);
 
-            tabbedCarousel.Carousel.Position = newTabIndex;
+            tabbedCarousel.TabViewIndex = newTabIndex;
 
             void SetTabUnderlineColor(int tabIndex, Color underlineColor)
             {
@@ -152,6 +231,26 @@ namespace TabbedCarousel
 
                 boxView.BackgroundColor = underlineColor;
             }
+        }
+
+        private static void TabViewIndexChanged(BindableObject bindable, object oldvalue,
+            object newvalue)
+        {
+            if (!(bindable is TabbedCarousel tabbedCarousel) ||
+                !(newvalue is int newTabIndex) ||
+                !(oldvalue is int oldTabIndex))
+                return;
+
+            if (newTabIndex == oldTabIndex)
+                return;
+
+            if (tabbedCarousel.Tabs.Children.Count < 1)
+                return;
+
+            var tab = tabbedCarousel.Tabs.Children[newTabIndex];
+            tabbedCarousel.TabViewsCarousel.ScrollToAsync(tab,
+                ScrollToPosition.MakeVisible,
+                false);
         }
 
         private static void TabNamesChanged(BindableObject bindable, object oldvalue,
@@ -191,8 +290,9 @@ namespace TabbedCarousel
                 var tapGesture = new TapGestureRecognizer();
                 tapGesture.Tapped += (sender, eventArgs) =>
                 {
+                    // TODO
                     if (int.TryParse(((StackLayout) sender).ClassId, out var tabIndex))
-                        tabbedCarousel.SelectedTabIndex = tabIndex;
+                        tabbedCarousel.TabButtonIndex = tabIndex;
                 };
 
                 var tabButton = new StackLayout
@@ -215,7 +315,7 @@ namespace TabbedCarousel
             }
 
             // TODO Default to first or set based on stored value?
-            tabbedCarousel.SelectedTabIndex = 0;
+            tabbedCarousel.TabViewIndex = 0;
         }
 
         private static void TabViewsChanged(BindableObject bindable, object oldValue,
@@ -226,7 +326,13 @@ namespace TabbedCarousel
                 tabbedCarousel.TabViews.Count <= 0)
                 return;
 
-            // TODO
+            tabbedCarousel.Tabs.Children.Clear();
+
+            foreach (var tabView in tabbedCarousel.TabViews)
+            {
+                tabView.WidthRequest = PageWidth;
+                tabbedCarousel.Tabs.Children.Add(tabView);
+            }
         }
 
         #endregion

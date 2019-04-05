@@ -25,6 +25,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.Yellow,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -34,6 +35,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.Salmon,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -43,6 +45,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.DarkSeaGreen,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -52,6 +55,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.PaleVioletRed,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -61,6 +65,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.Orange,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -70,6 +75,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.CornflowerBlue,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -79,6 +85,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.LightSlateGray,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     },
@@ -88,6 +95,7 @@ namespace TabbedCarouselDemo
                         BackgroundColor = Color.MediumPurple,
                         TextColor = Color.Black,
                         FontAttributes = FontAttributes.Bold,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     }
