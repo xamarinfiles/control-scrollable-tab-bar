@@ -59,7 +59,7 @@ namespace TabbedCarousel
 
         #region Fields
 
-        private static double PageWidth => Device.Info.ScaledScreenSize.Width;
+        public static double PageWidth => Device.Info.ScaledScreenSize.Width;
 
         private XDirection SwipeDirection { get; set; }
 
@@ -128,24 +128,42 @@ namespace TabbedCarousel
 
         #endregion
 
-        #region TabViews
+        #region TabData
 
-        public ObservableCollection<View> TabViews
+        public IList<object> TabData
         {
-            get => (ObservableCollection<View>) GetValue(TabViewsProperty);
-            set => SetValue(TabViewsProperty, value);
+            get => (IList<object>) GetValue(TabDataProperty);
+            set => SetValue(TabDataProperty, value);
         }
 
         [SuppressMessage("ReSharper", "RedundantArgumentName")]
-        private static readonly BindableProperty TabViewsProperty =
+        private static readonly BindableProperty TabDataProperty =
             BindableProperty.Create(
-                propertyName: nameof(TabViews),
-                returnType: typeof(ObservableCollection<View>),
+                propertyName: nameof(TabData),
+                returnType: typeof(IList<object>),
                 declaringType: typeof(TabbedCarousel),
-                defaultValue: default(ObservableCollection<View>),
-                propertyChanged: TabViewsChanged);
+                defaultValue: default(IList<object>));
 
         #endregion
+
+        //#region TabViews
+
+        //public ObservableCollection<View> TabViews
+        //{
+        //    get => (ObservableCollection<View>) GetValue(TabViewsProperty);
+        //    set => SetValue(TabViewsProperty, value);
+        //}
+
+        //[SuppressMessage("ReSharper", "RedundantArgumentName")]
+        //private static readonly BindableProperty TabViewsProperty =
+        //    BindableProperty.Create(
+        //        propertyName: nameof(TabViews),
+        //        returnType: typeof(ObservableCollection<View>),
+        //        declaringType: typeof(TabbedCarousel),
+        //        defaultValue: default(ObservableCollection<View>));
+        //        //propertyChanged: TabViewsChanged);
+
+        //#endregion
 
         #endregion
 
@@ -333,22 +351,22 @@ namespace TabbedCarousel
             tabbedCarousel.TabViewIndex = 0;
         }
 
-        private static void TabViewsChanged(BindableObject bindable, object oldValue,
-            object newValue)
-        {
-            if (!(bindable is TabbedCarousel tabbedCarousel) ||
-                tabbedCarousel.TabViews == null ||
-                tabbedCarousel.TabViews.Count <= 0)
-                return;
+        //private static void TabViewsChanged(BindableObject bindable, object oldValue,
+        //    object newValue)
+        //{
+        //    if (!(bindable is TabbedCarousel tabbedCarousel) ||
+        //        tabbedCarousel.TabViews == null ||
+        //        tabbedCarousel.TabViews.Count <= 0)
+        //        return;
 
-            tabbedCarousel.Tabs.Children.Clear();
+        //    tabbedCarousel.Tabs.Children.Clear();
 
-            foreach (var tabView in tabbedCarousel.TabViews)
-            {
-                tabView.WidthRequest = PageWidth;
-                tabbedCarousel.Tabs.Children.Add(tabView);
-            }
-        }
+        //    foreach (var tabView in tabbedCarousel.TabViews)
+        //    {
+        //        tabView.WidthRequest = PageWidth;
+        //        tabbedCarousel.Tabs.Children.Add(tabView);
+        //    }
+        //}
 
         #endregion
     }

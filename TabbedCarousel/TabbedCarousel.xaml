@@ -3,6 +3,7 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:control="clr-namespace:TabbedCarousel;assembly=TabbedCarousel"
   x:Class="TabbedCarousel.TabbedCarousel"
   x:Name="This">
   <ContentView.Content>
@@ -28,10 +29,28 @@
         IsClippedToBounds="False"
         HorizontalScrollBarVisibility="Never"
         VerticalScrollBarVisibility="Never">
-        <StackLayout x:Name="Tabs"
+        <!--<StackLayout x:Name="Tabs"
           Orientation="Horizontal"
           IsClippedToBounds="False"
-          Spacing="0" />
+          Spacing="0" />-->
+        <StackLayout x:Name="Tabs"
+          BindableLayout.ItemsSource="{Binding TabData, Source={x:Reference This}}"
+          Orientation="Horizontal"
+          IsClippedToBounds="False"
+          Spacing="0">
+          <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <Label Text="{Binding Name}"
+                  HorizontalOptions="FillAndExpand"
+                  WidthRequest="{x:Static control:TabbedCarousel.PageWidth}"
+                  TextColor="Black"
+                  FontAttributes="Bold"
+                  BackgroundColor="{Binding Color}"
+                  HorizontalTextAlignment="Center"
+                  VerticalTextAlignment="Center" />
+            </DataTemplate>
+          </BindableLayout.ItemTemplate>
+        </StackLayout>
       </ScrollView>
 
       <BoxView Grid.Row="1"
