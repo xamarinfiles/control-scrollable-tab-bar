@@ -1,10 +1,12 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace TabbedCarouselDemo
 {
+    [SuppressMessage("ReSharper", "RedundantExtendsListEntry")]
     public partial class App : Application
     {
         public App()

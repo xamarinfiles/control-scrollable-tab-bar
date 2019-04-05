@@ -1,17 +1,15 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using CarouselView.FormsPlugin.Android;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace TabbedCarouselDemo.Droid
 {
-    [Activity(Label = "TabbedCarouselDemo", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(Label = "TabbedCarouselDemo", Icon = "@mipmap/icon",
+        Theme = "@style/MainTheme", MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -20,9 +18,7 @@ namespace TabbedCarouselDemo.Droid
 
             base.OnCreate(savedInstanceState);
 
-            Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            CarouselViewRenderer.Init();
+            Forms.Init(this, savedInstanceState);
 
             LoadApplication(new App());
         }

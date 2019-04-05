@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using Xamarin.Forms;
 
 namespace TabbedCarouselDemo
 {
+    [SuppressMessage("ReSharper", "RedundantExtendsListEntry")]
     public partial class MainPage : ContentPage
     {
         public MainPage()

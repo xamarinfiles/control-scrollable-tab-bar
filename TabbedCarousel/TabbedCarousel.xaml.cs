@@ -6,14 +6,46 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ScrolledEventArgs = Xamarin.Forms.ScrolledEventArgs;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
 namespace TabbedCarousel
 {
+    [SuppressMessage("ReSharper", "RedundantExtendsListEntry")]
     public partial class TabbedCarousel : ContentView
     {
+        #region Constructors
+
+        public TabbedCarousel()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception exception)
+            {
+                SaveExceptionLocation(exception);
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Exceptions
+
+        private void SaveExceptionLocation(Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            exception.Data.Add("Member Name", memberName);
+            exception.Data.Add("Source File Path", sourceFilePath);
+            exception.Data.Add("Source Line Number", sourceLineNumber);
+        }
+
+        #endregion
+
         #region Enums
 
         private enum XDirection
@@ -30,24 +62,6 @@ namespace TabbedCarousel
         private static double PageWidth => Device.Info.ScaledScreenSize.Width;
 
         private XDirection SwipeDirection { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        public TabbedCarousel()
-        {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception exception)
-            {
-                SaveExceptionLocation(exception);
-
-                throw;
-            }
-        }
 
         #endregion
 
@@ -149,13 +163,14 @@ namespace TabbedCarousel
 
         #region Private
 
-        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        private void PanGestureRecognizer_OnPanUpdated(object sender,
+            PanUpdatedEventArgs e)
         {
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
                 case GestureStatus.Running:
-                    XDirection newDirection = XDirection.Unknown;
+                    var newDirection = XDirection.Unknown;
 
                     if (e.TotalX < 0)
                         newDirection = XDirection.Right;
@@ -333,20 +348,6 @@ namespace TabbedCarousel
                 tabView.WidthRequest = PageWidth;
                 tabbedCarousel.Tabs.Children.Add(tabView);
             }
-        }
-
-        #endregion
-
-        #region Exceptions
-
-        private void SaveExceptionLocation(Exception exception,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            exception.Data.Add("Member Name", memberName);
-            exception.Data.Add("Source File Path", sourceFilePath);
-            exception.Data.Add("Source Line Number", sourceLineNumber);
         }
 
         #endregion
